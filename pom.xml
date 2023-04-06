@@ -18,6 +18,7 @@
 
     <modules>
         <module>Usuarios-SpringCloud</module>
+        <module>Cursos-SpringCloud</module>
     </modules>
 
     <properties>
