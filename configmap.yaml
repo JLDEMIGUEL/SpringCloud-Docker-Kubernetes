@@ -9,6 +9,24 @@ data:
 #  db_username: root
 #  db_password: root
   cursos_url: msvc-cursos:8002
+  application.yaml: |-
+    config:
+      texto: Configurando ambiente por defecto
+    ---
+    spring:
+      config:
+        activated
+          on-profile: dev
+    config:
+      texto: Configurando ambiente de desarrollo
+    ---
+    spring:
+      config:
+        activated
+          on-profile: prod
+    config:
+      texto: Configurando ambiente de produccion
+    
 
 ---
 
