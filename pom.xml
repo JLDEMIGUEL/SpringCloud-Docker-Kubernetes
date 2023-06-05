@@ -19,6 +19,7 @@
     <modules>
         <module>Usuarios-SpringCloud</module>
         <module>Cursos-SpringCloud</module>
+        <module>msvc-gateway</module>
     </modules>
 
     <properties>
