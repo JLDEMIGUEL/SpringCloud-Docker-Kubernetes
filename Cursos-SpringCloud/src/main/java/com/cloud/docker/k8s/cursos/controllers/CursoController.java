@@ -28,8 +28,8 @@ public class CursoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> detalle(@PathVariable Long id){
-        Optional<Curso> cursoOptional = service.porIdConUsuarios(id);
+    public ResponseEntity<?> detalle(@PathVariable Long id, @RequestHeader(value = "Authorization") String token){
+        Optional<Curso> cursoOptional = service.porIdConUsuarios(id, token);
         if(cursoOptional.isPresent())
             return ResponseEntity.ok(cursoOptional.get());
         return ResponseEntity.notFound().build();
@@ -69,10 +69,10 @@ public class CursoController {
     }
 
     @PutMapping("/asignar-usuario/{cursoId}")
-    public ResponseEntity<?> asignarUsuario(@RequestBody Usuario usuario, @PathVariable Long cursoId){
+    public ResponseEntity<?> asignarUsuario(@RequestBody Usuario usuario, @PathVariable Long cursoId, @RequestHeader(value = "Authorization", required = true) String token){
         Optional<Usuario> o;
         try{
-            o = service.asignarUsuario(usuario, cursoId);
+            o = service.asignarUsuario(usuario, cursoId, token);
         } catch (FeignException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Map.of("error", "No existe usuario por el id o error en la conexion: "+ e.getMessage()));
@@ -84,10 +84,10 @@ public class CursoController {
     }
 
     @PostMapping("/crear-usuario/{cursoId}")
-    public ResponseEntity<?> crearUsuario(@RequestBody Usuario usuario, @PathVariable Long cursoId){
+    public ResponseEntity<?> crearUsuario(@RequestBody Usuario usuario, @PathVariable Long cursoId, @RequestHeader(value = "Authorization", required = true) String token){
         Optional<Usuario> o;
         try{
-            o = service.crearUsuario(usuario, cursoId);
+            o = service.crearUsuario(usuario, cursoId, token);
         } catch (FeignException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Map.of("error", "No se pudo crear el usuario o error en la conexion: "+ e.getMessage()));
@@ -99,10 +99,10 @@ public class CursoController {
     }
 
     @DeleteMapping("/eliminar-usuario/{cursoId}")
-    public ResponseEntity<?> eliminarUsuario(@RequestBody Usuario usuario, @PathVariable Long cursoId){
+    public ResponseEntity<?> eliminarUsuario(@RequestBody Usuario usuario, @PathVariable Long cursoId, @RequestHeader(value = "Authorization", required = true) String token){
         Optional<Usuario> o;
         try{
-            o = service.eliminarUsuario(usuario, cursoId);
+            o = service.eliminarUsuario(usuario, cursoId, token);
         } catch (FeignException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Map.of("error", "No se pudo eliminar el usuario por id o error en la conexion: "+ e.getMessage()));
